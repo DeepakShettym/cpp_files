@@ -1,6 +1,7 @@
 #include<iostream>
 #include<vector>
 #include<algorithm>
+#include<algorithm>
 using namespace std;
 
 bool customComparatorDesnd(int a, int b){
@@ -26,3 +27,9 @@ int main(){
   } 
   return 0;
 }
+
+/*
+Output :
+descending order  99 71 56 44 22 1 
+ascending order   1 22 44 56 71 99
+*/
