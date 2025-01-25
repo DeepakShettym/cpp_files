@@ -1,5 +1,6 @@
 //binary tree and its representaions
 #include <iostream>
+#include <bits/stdc++.h>
 #include <queue>
 using namespace std;
 
@@ -160,6 +161,55 @@ void ZigZagTreversal(Node *root) {
     }
   }
 }
+
+ 
+
+
+
+vector<int> verticalOrderTraversal(Node *root)
+{
+    map<int, map<int, vector<int>>> node;
+    queue<pair<Node*, pair<int, int>>> q;  
+    vector<int> ans;
+
+    if (root == NULL) {
+        return ans;  
+    }
+
+    q.push(make_pair(root, make_pair(0, 0)));
+
+    while (!q.empty()) {
+        pair<Node*, pair<int, int>> frontNode = q.front();
+        q.pop();
+
+        int hd = frontNode.second.first;  
+        int lvl = frontNode.second.second;  
+
+        node[hd][lvl].push_back(frontNode.first->data);  
+
+        if (frontNode.first->left) {
+           
+            q.push(make_pair(frontNode.first->left, make_pair(hd - 1, lvl + 1)));
+        }
+
+        if (frontNode.first->right) {
+         
+            q.push(make_pair(frontNode.first->right, make_pair(hd + 1, lvl + 1)));
+        }
+    }
+
+   
+    for (auto i : node) {
+        for (auto j : i.second) {
+            for (auto k : j.second) {
+                ans.push_back(k);  
+            }
+        }
+    }
+
+    return ans;
+}
+
 
 int main() {
   Node *root = NULL;
