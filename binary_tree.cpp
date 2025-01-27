@@ -375,6 +375,44 @@ void solve(Node* root,vector<int> &ans,int level){
            return NULL;
        }
     }
+
+    int findBottomLeftDataue(Node* root) {
+        if(root->left==NULL && root->right==NULL){
+            return root->data;
+        }
+
+        int dataue = 0;
+         queue<Node *> queue;
+            queue.push(root);
+            queue.push(NULL);
+
+  while (!queue.empty()) {
+    Node *temp = queue.front();
+    queue.pop();
+
+    if (temp == NULL) {
+        if(!queue.empty()){
+                  Node* ans = queue.front();
+                   dataue = ans->data;
+        }
+
+      if (!queue.empty()) {
+        queue.push(NULL);
+      }
+
+    } else {
+      if (temp->left) {
+        queue.push(temp->left);
+      }
+
+      if (temp->right) {
+        queue.push(temp->right);
+      }
+    }
+  }
+
+  return dataue;
+    }
  
 
 int main() {
