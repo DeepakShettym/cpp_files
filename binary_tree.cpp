@@ -294,23 +294,23 @@ vector<int> verticalOrderTraversal(Node *root)
        solve(root,ans,0);
        return ans;
     }  
-void solve(Node* root,vector<int> &ans,int level){
+void rightView_solve(Node* root,vector<int> &ans,int level){
         if(root==NULL){
             return;
         }
         if(level==ans.size()){
             ans.push_back(root->data);
         }
-        solve(root->left,ans,level+1);
+        rightView_solve(root->left,ans,level+1);
         
-        solve(root->right,ans,level+1);
+        rightView_solve(root->right,ans,level+1);
     }
 
 
  vector<int> rightView(Node *root)
     {
         vector<int> ans;
-       solve(root,ans,0);
+       rightView_solve(root,ans,0);
        return ans;
     }
 void solve(Node* root,vector<int> &ans,int level){
@@ -327,7 +327,7 @@ void solve(Node* root,vector<int> &ans,int level){
       
     }
 
-        void solve(Node* root,int len,int &maxLen,int sum,int &maxSum){
+        void sumOfLongRootToLeafPath_solve(Node* root,int len,int &maxLen,int sum,int &maxSum){
         if(root==NULL){
             if(len > maxLen){
                 maxLen = len;
@@ -342,8 +342,8 @@ void solve(Node* root,vector<int> &ans,int level){
             
             sum = sum + root->data;
             
-            solve(root->left,len+1,maxLen,sum,maxSum);
-            solve(root->right,len+1,maxLen,sum,maxSum);
+            sumOfLongRootToLeafPath_solve(root->left,len+1,maxLen,sum,maxSum);
+            sumOfLongRootToLeafPath_solve(root->right,len+1,maxLen,sum,maxSum);
         
     }
     int sumOfLongRootToLeafPath(Node *root) {
@@ -352,7 +352,7 @@ void solve(Node* root,vector<int> &ans,int level){
         int sum = 0;
         int maxSum = INT_MIN;
 
-    solve(root, len, maxLen, sum, maxSum);
+    sumOfLongRootToLeafPath_solve(root, len, maxLen, sum, maxSum);
 
     return maxSum;
     }
@@ -417,15 +417,15 @@ void solve(Node* root,vector<int> &ans,int level){
     }
 
 
-    void solve(Node* root, int targetSum,int &count,vector<int> path){
+    void pathSum_solve(Node* root, int targetSum,int &count,vector<int> path){
         if(root==NULL){
             return;
         }
 
         path.push_back(root->data);
 
-        solve(root->left,targetSum,count,path);
-        solve(root->right,targetSum,count,path);
+        pathSum_solve(root->left,targetSum,count,path);
+        pathSum_solve(root->right,targetSum,count,path);
 
         int size = path.size();
         long sum =0;
@@ -443,7 +443,7 @@ void solve(Node* root,vector<int> &ans,int level){
     int pathSum(Node* root, int targetSum) {
         vector<int> path;
         int count = 0;
-        solve(root,targetSum,count,path);
+        pathSum_solve(root,targetSum,count,path);
         return count;
     }
 
@@ -473,7 +473,38 @@ void solve(Node* root,vector<int> &ans,int level){
    
     return isSumProperty(root->left) && isSumProperty(root->right);
 }
-
+int toSumTree_solve(Node *node){
+          if(node==NULL){
+              return 0;
+          }
+          
+        
+          
+          
+         int left = toSumTree_solve(node->left);
+          int right = toSumTree_solve(node->right);
+          
+          int value = left + right + node->data;
+          
+            if(node->left==NULL && node->right == NULL){
+                
+              node->data = 0;
+              
+          }else{
+               node->data = left + right;
+          }
+          
+         
+          
+          
+          return value;
+       }
+ 
+    void toSumTree(Node *node)
+    {
+         int sum = toSumTree_solve(node);
+         
+    }
  
 
 int main() {
