@@ -523,6 +523,52 @@ int toSumTree_solve(Node *node){
        
        
     }
+
+      int getLevelDiff(Node *root)
+    {
+       queue<Node *> queue;
+          queue.push(root);
+          queue.push(NULL);
+          
+          int sumEven = 0;
+          int sumOdd  = 0;
+          
+         bool isodd = true;
+
+  while (!queue.empty()) {
+    Node *temp = queue.front();
+    queue.pop();
+
+    if (temp == NULL) {
+      isodd = !isodd;
+
+      if (!queue.empty()) {
+        queue.push(NULL);
+      }
+
+    } else {
+      
+      if(isodd){
+          sumOdd += temp->data;
+      }else{
+          sumEven += temp->data;
+      }
+
+      if (temp->left) {
+        queue.push(temp->left);
+      }
+
+      if (temp->right) {
+        queue.push(temp->right);
+      }
+    }
+  }
+  
+  
+  
+  
+  return sumOdd - sumEven;
+    }
  
 
 int main() {
