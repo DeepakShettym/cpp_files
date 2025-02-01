@@ -565,10 +565,40 @@ int toSumTree_solve(Node *node){
   }
   
   
-  
-  
   return sumOdd - sumEven;
     }
+
+
+ bool isSymmetric( Node* root)
+    {
+        if(root==NULL || (root->left ==NULL && root->right == NULL)){
+            return true;
+        }
+	       return solve_isSymmetric(root->left,root->right);
+    }
+    
+    bool solve_isSymmetric( Node* leftNode, Node* rightNode){
+        
+        if(left==NULL && right == NULL){
+            return true;
+        }
+        
+         if (leftNode == NULL || rightNode == NULL) {
+        return false; 
+    }
+        s
+        bool leftans = solve_isSymmetric(leftNode->left,rightNode->right);
+        bool rightans =  solve_isSymmetric(leftNode->right,rightNode->left);
+        
+        
+        
+    
+        return leftans && rightans && (leftNode->data == rightNode->data);
+        
+        
+        
+    }
+
  
 
 int main() {
