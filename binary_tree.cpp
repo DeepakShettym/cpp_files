@@ -599,6 +599,9 @@ int toSumTree_solve(Node *node){
         
     }
 
+
+    //inorder preorder
+
     Node* solve_buildTree(vector<int> &inorder, vector<int> &preorder, int &index, int start, int end, int n) {
     if (index >= n || start > end) {
         return NULL;
@@ -635,6 +638,48 @@ int toSumTree_solve(Node *node){
         Node* ans = solve_buildTree(inorder,preorder,preorderIndex,0,n-1,n);
         return ans;
     }
+
+
+
+// inorder postorder 
+class Solution {
+public:
+    Node* solve_buildTree2(vector<int> &inorder, vector<int> &postorder, int &index, int start, int end, int n) {
+    if (index < 0 || start > end) {
+        return NULL;
+    }
+    
+    int elem = postorder[index];
+    int pos = -1;
+    
+   
+    for (int i = start; i <= end; i++) {
+        if (inorder[i] == elem) {
+            pos = i;
+            break;  
+        }
+    }
+    
+    // Create root node
+    Node* root = new Node(elem);
+    index--;  
+
+    root->right = solve_buildTree2(inorder, postorder, index, pos + 1, end, n);
+    root->left = solve_buildTree2(inorder, postorder, index, start, pos - 1, n);
+
+
+    return root;
+}
+    
+
+    Node* buildTree2(vector<int>& inorder, vector<int>& postorder) {
+        
+        int n = postorder.size();
+        int postorderIndex = n-1;
+        Node* ans = solve_buildTree(inorder,postorder,postorderIndex,0,n-1,n);
+        return ans;
+    }
+};
 
  
 
