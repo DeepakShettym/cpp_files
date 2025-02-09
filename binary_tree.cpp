@@ -586,7 +586,7 @@ int toSumTree_solve(Node *node){
          if (leftNode == NULL || rightNode == NULL) {
         return false; 
     }
-        s
+        
         bool leftans = solve_isSymmetric(leftNode->left,rightNode->right);
         bool rightans =  solve_isSymmetric(leftNode->right,rightNode->left);
         
@@ -597,6 +597,43 @@ int toSumTree_solve(Node *node){
         
         
         
+    }
+
+    Node* solve_buildTree(vector<int> &inorder, vector<int> &preorder, int &index, int start, int end, int n) {
+    if (index >= n || start > end) {
+        return NULL;
+    }
+    
+    int elem = preorder[index];
+    int pos = -1;
+    
+   
+    for (int i = start; i <= end; i++) {
+        if (inorder[i] == elem) {
+            pos = i;
+            break;  
+        }
+    }
+    
+    // Create root node
+    Node* root = new Node(elem);
+    index++;  
+
+    
+    root->left = solve_buildTree(inorder, preorder, index, start, pos - 1, n);
+    root->right = solve_buildTree(inorder, preorder, index, pos + 1, end, n);
+
+    return root;
+}
+        
+        
+        
+    
+    Node *buildTree(vector<int> &inorder, vector<int> &preorder) {
+        int preorderIndex = 0;
+        int n = inorder.size();
+        Node* ans = solve_buildTree(inorder,preorder,preorderIndex,0,n-1,n);
+        return ans;
     }
 
  
