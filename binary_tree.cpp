@@ -291,9 +291,23 @@ vector<int> verticalOrderTraversal(Node *root)
 
   vector<int> leftView(Node *root) {
        vector<int> ans;
-       solve(root,ans,0);
+       leftView_solve(root,ans,0);
        return ans;
     }  
+
+    void leftView_solve(Node* root,vector<int> &ans,int level){
+      if(root==NULL){
+          return;
+      }
+      if(level==ans.size()){
+          ans.push_back(root->data);
+      }
+      
+      leftView_solve(root->right,ans,level+1);
+      leftView_solve(root->left,ans,level+1);
+      
+    
+  }
 void rightView_solve(Node* root,vector<int> &ans,int level){
         if(root==NULL){
             return;
@@ -313,19 +327,7 @@ void rightView_solve(Node* root,vector<int> &ans,int level){
        rightView_solve(root,ans,0);
        return ans;
     }
-void solve(Node* root,vector<int> &ans,int level){
-        if(root==NULL){
-            return;
-        }
-        if(level==ans.size()){
-            ans.push_back(root->data);
-        }
-        
-          solve(root->right,ans,level+1);
-        solve(root->left,ans,level+1);
-        
-      
-    }
+
 
         void sumOfLongRootToLeafPath_solve(Node* root,int len,int &maxLen,int sum,int &maxSum){
         if(root==NULL){
@@ -768,6 +770,95 @@ public:
      int ans = burnTree(targetNode,nodeToParent);
      return ans;
   }
+
+
+  Node* createParentMapping(Node* root,int target,map<Node* , Node*> &nodeToParent){
+    Node* res = NULL;
+    
+    queue<Node*> q;
+    
+    q.push(root);
+    nodeToParent[root] = NULL;
+    
+    while(!q.empty()){
+        Node* front = q.front();
+        q.pop();
+        
+        if(front->data==target){
+            res = front;
+        }
+        
+        if(front->left){
+            nodeToParent[front->left] = front;
+            q.push(front->left);
+        }
+        
+         if(front->right){
+             nodeToParent[front->right] = front;
+            q.push(front->right);
+        }
+    }
+    
+    return res;
+}
+
+ vector<int> findDistance(Node* root,map<Node* , Node*> nodeToParent,int k){
+    map<Node*,bool> visited;
+    vector<int> ans;
+    
+    queue<pair<Node*,int>> q;
+    q.push(make_pair(root,0));
+    
+    visited[root] = true;
+    
+    while(!q.empty()){
+        bool flag = 0;
+        int size = q.size();
+        
+        for(int i=0; i<size;i++){
+            pair<Node*,int> p =  q.front();
+            Node* front = p.first;
+            int distance = p.second;
+            q.pop();
+            
+            if(distance == k){
+                ans.push_back(front->data);
+            }
+            
+            if(front->left && !visited[front->left]){
+                q.push(make_pair(front->left,distance+1));
+                visited[front->left] = true;
+            }
+            
+              if(front->right && !visited[front->right]){
+                q.push(make_pair(front->right,distance+1));
+                visited[front->right] = true;
+            }
+            
+            if(nodeToParent[front] && !visited[nodeToParent[front]]){
+                q.push(make_pair(nodeToParent[front],distance+1));
+                visited[nodeToParent[front]] = true;
+            }
+        }
+        
+         
+    }
+    
+    sort(ans.begin(), ans.end());
+    
+    return ans; 
+    
+    
+}
+
+
+vector<int> KDistanceNodes(Node* root, int target, int k) {
+     map<Node* , Node*> nodeToParent;
+   Node* targetNode =  createParentMapping(root,target,nodeToParent);
+   vector<int> ans = findDistance(targetNode,nodeToParent,k);
+   
+   return ans;
+}
 };
 
  
