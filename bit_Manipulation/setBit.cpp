@@ -1,17 +1,22 @@
 #include<iostream>
 using namespace std;
 
-bool isSetBit(int num, int i) {
-    return (num & (1 << i));
+int setBit(int num,int i){
+  num =  num ^ (1 << i);
+  return num;
 }
 
-int main() {
-    int i = 2;
-    int num = 13;
+int main(){
 
-    bool ans = isSetBit(num, i);
+  int num = 9;
 
-    cout << ans << endl;
+  int ans = setBit(num , 2);
 
-    return 0;
+  cout << ans << endl;
+  
+
+
+  return 0;
 }
+
+// output is 13
