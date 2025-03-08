@@ -2,7 +2,7 @@
 using namespace std;
 
 int setBit(int num,int i){
-  num =  num ^ (1 << i);
+  num =  num | (1 << i);
   return num;
 }
 
