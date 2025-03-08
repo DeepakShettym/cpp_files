@@ -7,6 +7,7 @@ bool isSetBit(int num, int i) {
 
 int main() {
     int i = 2;
+    
     int num = 13;
 
     bool ans = isSetBit(num, i);
