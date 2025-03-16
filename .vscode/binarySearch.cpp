@@ -52,6 +52,19 @@ vector<int> searchRange(vector<int>& nums, int target) {
 
     return {ans1, ans2};
 }
+int countFreq(vector<int>& arr, int target) {
+    int size = arr.size();  // Corrected from `.length()`
+    int ans1 = binarySearchLeft(arr, size, target);
+    int ans2 = binarySearchRight(arr, size, target);
+    
+    if(ans1 == -1 && ans2 == -1 ){
+        return 0;
+    }
+    
+    return (ans2 - ans1) + 1;
+    
+    
+}
 
 int main() {
     vector<int> nums = {5, 7, 7, 8, 8, 10};
