@@ -1,4 +1,6 @@
 #include<vector>
+#include<iostream>
+using namespace std;
 
 class Solution {
   public:
@@ -46,7 +48,7 @@ class Solution {
       return -1;
   }
   
-     int search(vector<int>& nums, int target) {
+     int searchInRotatedArray(vector<int>& nums, int target) {
       int pivot = findMin(nums);
       int end = nums.size() - 1;
   
@@ -56,6 +58,6 @@ class Solution {
           return binarySearch(nums, 0, pivot - 1, target);
       }
   }
-  
+
   
   };
