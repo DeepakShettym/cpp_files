@@ -4,7 +4,7 @@ using namespace std;
 
 class Solution {
   public:
-        int findMin(vector<int>& nums) {
+        int findMinPivot(vector<int>& nums) {
           int start = 0;
           int end = nums.size() - 1;
   
