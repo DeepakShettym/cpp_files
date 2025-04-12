@@ -3,6 +3,7 @@ using namespace std;
 
 int main(){
   int count =  0;
+  
   int n = 25;
 
   while(n!=0){
@@ -11,5 +12,7 @@ int main(){
   }
 
   cout << count << endl;
+
+  
   return 0;
 }

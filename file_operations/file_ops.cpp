@@ -59,9 +59,18 @@ int main(){
     startLine++; 
 }
 
- 
-
-  
+inFile1.close();
 
   return 0;
 }
+
+
+/*  Output : 
+ file created sucessfully
+ file is present
+ Reading from the file:
+ hey how are u pqr
+ hey how are u xyz
+ hey how are u abc
+ hey how are u pqr
+*/

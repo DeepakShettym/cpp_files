@@ -4,4 +4,6 @@ int count = 10;
 
 void display() {
     printf("Count = %d\n", count);
+
+    
 }
