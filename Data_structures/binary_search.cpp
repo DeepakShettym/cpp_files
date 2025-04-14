@@ -49,7 +49,7 @@ class Solution {
   }
   
      int searchInRotatedArray(vector<int>& nums, int target) {
-      int pivot = findMin(nums);
+      int pivot = findMinPivot(nums);
       int end = nums.size() - 1;
   
       if (target >= nums[pivot] && target <= nums[end]) {
