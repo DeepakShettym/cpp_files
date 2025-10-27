@@ -3,6 +3,8 @@
 #include <queue>
 using namespace std;
 
+
+
 class Heap {
     int arr[100];
     int size;
@@ -66,6 +68,30 @@ public:
     }
 };
 
+ class node{
+        public: 
+        
+        int data;
+        int i;
+        int j;
+        
+        
+        node(int data, int row, int col){
+            this->data = data;
+            i = row;
+            j = col;
+        }
+    };
+    
+    
+    class compare{
+        public:
+        bool operator()(node* a, node* b){
+          return a->data > b->data;
+      }  
+        
+    };
+
 // Heapify for 0-based index
 void heapify(int arr[], int n, int i) {
     int largest = i;
@@ -104,6 +130,39 @@ void heapify(int arr[], int n, int i) {
         
         
         return ans;
+        
+    }
+
+     vector<int> mergeArrays(vector<vector<int>> &mat) {
+        
+        priority_queue<node* , vector<node*> , compare> minHeap;
+        
+        for(int i = 0 ; i < mat.size() ; i++){
+            node* newNode = new node(mat[i][0],i,0);
+            minHeap.push(newNode);
+        }
+        
+        
+        vector<int> ans;
+        
+        
+        while(!minHeap.empty()){
+            node* tmp = minHeap.top();
+            
+            ans.push_back(tmp->data);
+            minHeap.pop();
+            
+            int i = tmp->i;
+            int j = tmp->j;
+            
+            if(j+1 < mat[i].size()){
+                node* nextNode = new node(mat[i][j+1],i,j+1);
+                minHeap.push(nextNode);
+            }
+        }
+        
+        return ans;
+        
         
     }
 
