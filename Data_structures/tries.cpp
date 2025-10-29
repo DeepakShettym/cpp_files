@@ -69,12 +69,52 @@ class Trie {
          return searchInTrie(root->childNode[index] , word.substr(1));
     }
 
+    void removeFormTrie(TrieNode* root , string word){
+        if(word.size() == 0){
+            root->isTerminal = false;
+            cout << "remove sucess" << endl;
+            return;
+        }
+
+        int index = word[0] - 'a';
+
+        TrieNode* child = root->childNode[index];
+
+        if(child == NULL){
+            cout << "word not found" << endl;
+            return;
+        }
+
+        removeFormTrie(child , word.substr(1));
+
+        bool hasChild = false;
+
+        for(int i = 0 ; i < 26 ; i++){
+            if(child->childNode[i]!=NULL){
+                hasChild = true;
+                break;
+            }
+        }
+
+            if(!child->isTerminal && !hasChild){
+                delete(child);
+                root->childNode[index] = NULL;
+            }
+        
+    }
+
+
+
     bool search(string word){
         return searchInTrie(root ,word);
     }
 
     void insert(string word){
       insertIntoTrie(root,word);
+    }
+
+    void remove(string word){
+        removeFormTrie(root,word);
     }
 
 };
@@ -87,7 +127,16 @@ int main(){
     t->insert("do");
     t->insert("time");
 
-    if(t->search("doo")){
+    if(t->search("do")){
+        cout << "present" << endl;
+    }else{
+        cout << "sorrry" << endl;
+    }
+
+    t->remove("do");
+
+    
+    if(t->search("do")){
         cout << "present" << endl;
     }else{
         cout << "sorrry" << endl;
