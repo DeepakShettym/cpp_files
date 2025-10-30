@@ -103,6 +103,27 @@ class Trie {
         
     }
 
+        void dfs(TrieNode* node, string &curr, string &ans) {
+       
+        if (!node->isTerminal && node != root) return;
+
+        if (curr.length() > ans.length() || 
+           (curr.length() == ans.length() && curr < ans)) {
+            ans = curr;
+        }
+
+       
+        for (int i = 0; i < 26; i++) {
+            TrieNode* child = node->childNode[i];
+            if (child && child->isTerminal) {
+                curr.push_back(child->data);
+                dfs(child, curr, ans);
+                curr.pop_back();  
+            }
+        }
+    }
+
+
 
 
     bool search(string word){
@@ -117,7 +138,15 @@ class Trie {
         removeFormTrie(root,word);
     }
 
+     string completeString() {
+        string ans = "";
+        string curr = "";
+        dfs(root, curr, ans);
+        return ans.empty() ? "None" : ans;
+    }
+
 };
+
 
 
 int main(){
