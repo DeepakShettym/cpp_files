@@ -170,6 +170,45 @@ int mazeObstacles(int n, int m, vector<vector<int>> &mat) {
         return dp[n-1][m-1];
     }
 
+    int minimumPathSum(vector<vector<int>>& triangle, int n){
+	
+
+	vector<vector<int>> dp(n , vector<int>(n , -1));
+
+
+	for(int i = 0 ; i < n ; i++){
+		for(int j = 0 ; j <= i ; j++){
+		       if(i == 0 && j == 0){
+				   dp[i][j] =  triangle[i][j];
+			   }else{
+				   int down = INT_MAX;
+				   int diag = INT_MAX;
+
+
+				   if(j < i)  down = triangle[i][j] + dp[i-1][j];
+				   if(i > 0 && j > 0) diag = triangle[i][j] + dp[i-1][j-1];
+
+				   dp[i][j] = min(down,diag);
+			   }
+
+
+		}
+
+
+
+		
+	}
+
+		int mini = INT_MAX;
+		for(int k = 0 ; k < n ; k++){
+
+			mini = min(dp[n-1][k] , mini);
+		}
+
+		return  mini;
+}
+    
+
 
 
 
