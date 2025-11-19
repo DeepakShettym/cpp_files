@@ -22,8 +22,10 @@ int main(){
     int a = 0x12345678; // 0001 0010 0011 0100 0101 0110 0111 1000
 
     // convert to 0x12005678 
-
     
+    a &= ~(0XFFF << 12);
+
+    printf("y0 The value of a after masking is : %x \n", a); // prints 12000678
 
     a &= ~(0xFF << 16);
 
