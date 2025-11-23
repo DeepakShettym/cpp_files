@@ -23,7 +23,7 @@ class   DP{
     return dp[n];
     }
 
-    // Space Optmisation
+    // Space Optmisation 
 
     int fib2(int n){
         int secprev = 0;
@@ -254,6 +254,36 @@ int solvecherryPickup(int i , int j1 ,int j2 , int r ,int c, vector<vector<int>>
 
         return solvecherryPickup(0,0,c-1,r,c,grid,dp);
     }
+
+    bool subsetSumToK(int n, int k, vector<int> &arr) {
+    vector<vector<int>> dp(n, vector<int>(k + 1, 0));
+    
+
+    for(int i = 0 ; i < n ; i++){
+        dp[i][0] = true;
+    }
+
+    if(arr[0] <= k) dp[0][arr[0]] = true;
+
+
+    for(int ind = 1 ; ind < n ; ind++){
+        for(int target = 1 ;target <= k ; target++){
+            bool notTake = dp[ind - 1][target];
+
+        bool take = false;
+        if (arr[ind] <= target)
+            take = dp[ind - 1][target - arr[ind]];
+
+            dp[ind][target] = take || notTake;
+        }
+
+
+    }
+
+    return dp[n-1][k];
+
+    
+}
 
 
     
