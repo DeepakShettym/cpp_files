@@ -285,6 +285,50 @@ int solvecherryPickup(int i , int j1 ,int j2 , int r ,int c, vector<vector<int>>
     
 }
 
+int minSubsetSumDifference(vector<int>& arr, int n)
+{
+	int totalSum = 0;
+	for(int &item : arr){
+		totalSum += item;
+	}
+
+	int m = totalSum / 2;
+
+	vector<vector<int>> dp(n, vector<int>(m + 1 , 0));
+
+	for(int i = 0 ; i < n ; i++){
+		dp[i][0] = true;
+	}
+
+
+	if(arr[0] <= m) dp[0][arr[0]] = true;
+
+
+	for(int i = 1 ; i < n ; i++){
+		for(int target = 1 ; target <= m ; target++){
+
+			bool notTake = dp[i - 1][target];
+
+			bool take = false;
+
+			if(arr[i] <= target) take = dp[i - 1][target - arr[i]];
+
+			dp[i][target] = notTake || take;
+		}
+	}
+
+	int mini = 1e8;
+
+	for(int k = 0 ; k <= m ; k++){
+		if(dp[n-1][k]){
+			int diff = abs(totalSum - 2 * k);
+			mini = min(mini , diff);
+		}
+	}
+
+	return mini;
+}
+
 
     
 
