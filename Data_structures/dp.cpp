@@ -330,6 +330,34 @@ int minSubsetSumDifference(vector<int>& arr, int n)
 }
 
 
+int solvefindWays(int i , int target , vector<int>& arr , vector<vector<int>> &dp){
+    
+    // base cases
+    if(target == 0) return 1;
+
+    if(i == 0) {
+        return (target == arr[0]);
+    }
+
+    if(dp[i][target] != -1) return dp[i][target];
+
+    int notTake = solvefindWays(i - 1 , target , arr , dp);
+
+    int take = 0;
+    if(arr[i] <= target)
+        take = solvefindWays(i - 1, target - arr[i] , arr , dp);
+
+    return dp[i][target] = take + notTake;
+}
+
+int findWays(vector<int>& arr, int k)
+{
+    int n = arr.size();
+    vector<vector<int>> dp(n , vector<int>(k + 1 , -1));
+    return solvefindWays(n - 1 , k , arr , dp );
+}
+
+
     
 
 
