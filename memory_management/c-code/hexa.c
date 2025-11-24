@@ -44,6 +44,15 @@ int main(){
 
      printf("%x",*p3);
 
+
+     // NOV 24 2023
+
+     int xx = 0x12345678;
+        char *ptr = (char*)&xx;
+        printf("\n  value in hex : %x \n",ptr[0]); 
+
+        printf("\n  value in integer : %d \n",(int)ptr[0]); 
+
      
 
 
