@@ -358,6 +358,36 @@ int findWays(vector<int>& arr, int k)
 }
 
 
+int knapsack(vector<int> weight, vector<int> value, int n, int maxWeight) 
+{
+	vector<vector<int>> dp(n , vector<int>(maxWeight + 1 , 0));
+
+
+	for(int i = weight[0] ; i <= maxWeight ; i++){
+		dp[0][i] = value[0];
+	}
+
+
+	for(int i = 1 ; i < n ; i++){
+		for(int target = 0 ; target <= maxWeight ; target++){
+			int take = dp[i-1][target];
+
+			int notTake = 0;
+
+			if(target >= weight[i]){
+				notTake = value[i] + dp[i - 1][target - weight[i]];
+			}
+
+
+			dp[i][target] =  max(take , notTake);
+		}
+	}
+
+
+	return dp[n-1][maxWeight];
+}
+
+
     
 
 
