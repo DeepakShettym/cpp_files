@@ -29,16 +29,18 @@ int isEmpty(Stack *s){
 }
 
 void push(Stack *s , int elem){
-        Node* newNode = (Node*) malloc (sizeof(Node));
+        Node* newNode = malloc(sizeof(Node));
+        if (!newNode) {
+        printf("Memory allocation failed\n");
+        return;  
+        }
         newNode->data = elem;
         newNode->next = NULL;
 
-        if(s->top == NULL){
-            s->top = newNode;
-        }else{
-            newNode->next = s->top;
-            s->top = newNode;
-        }
+    
+        newNode->next = s->top;
+        s->top = newNode;
+        
 
         s->size += 1;
 }
@@ -51,15 +53,10 @@ int pop(Stack *s){
 
     int elem = s->top->data;
 
-    if(s->top->next == NULL){
-        Node* freenode = s->top;
-        s->top = NULL;
-        free(freenode);
-    }else{
-        Node* freenode = s->top;
-        s->top = s->top->next;
-         free(freenode);
-    }
+  
+    Node* freenode = s->top;
+    s->top = s->top->next;
+    free(freenode);
 
     s->size -= 1;
 
@@ -72,14 +69,20 @@ int size(Stack *s){
 
 
 int top(Stack *s){
-    return s->top->data;
+    if (isEmpty(s)) {
+    printf("stack is empty\n");
+    return -1; 
+}
+
+return s->top->data;
+
 }
 
 
 int main()
 {
 
-    Stack *s =  (Stack*) malloc (sizeof(Stack));
+    Stack *s =  malloc (sizeof(Stack));
     initStack(s);
     push(s,1);
     push(s,2);
@@ -103,6 +106,8 @@ int main()
     int empty = isEmpty(s);
 
     printf("isEmpty %d \n " , empty);
+
+    free(s);
 
     return 0;
 
