@@ -96,6 +96,90 @@ i++;
 return ans;
 }
 
+ void reverseString(string &str) {
+        int s = 0, e = str.length() - 1;
+        while (s < e) {
+            str[s] = str[s] ^ str[e];
+            str[e] = str[s] ^ str[e];
+            str[s] = str[s] ^ str[e];
+            s++;
+            e--;
+        }
+    }
+
+  
+
+    string infixToPrefix(string s) {
+
+        // 1. Reverse
+        reverseString(s);
+
+        // 2. Swap brackets
+        for (char &c : s) {
+            if (c == '(') c = ')';
+            else if (c == ')') c = '(';
+        }
+
+        stack<char> st;
+        string ans = "";
+
+        for (int i = 0; i < s.length(); i++) {
+            char ch = s[i];
+
+            // operand
+            if (isalnum(ch)) {
+                ans += ch;
+            }
+            // opening bracket
+            else if (ch == '(') {
+                st.push(ch);
+            }
+            // closing bracket
+            else if (ch == ')') {
+                while (!st.empty() && st.top() != '(') {
+                    ans += st.top();
+                    st.pop();
+                }
+                st.pop(); // remove '('
+            }
+            // operator
+            else {
+                
+                if(ch == '^'){
+                    while (!st.empty() &&
+                       (priority(ch) <= priority(st.top())))
+                {
+                    ans += st.top();
+                    st.pop();
+                }
+                st.push(ch);
+            }else{
+                
+            
+                while (!st.empty() &&
+                       (priority(ch) < priority(st.top())))
+                {
+                    ans += st.top();
+                    st.pop();
+                }
+                st.push(ch);
+            }
+            
+            }
+        }
+
+       
+        while (!st.empty()) {
+            ans += st.top();
+            st.pop();
+        }
+
+        // final reverse
+        reverseString(ans);
+
+        return ans;
+    }
+
 
    
 };
