@@ -233,6 +233,29 @@ string prefixToInfixConversion(string &s){
 	return st.top();
 }
 
+string postfixToPrefix(string &s){
+   stack<string> st;
+
+   int i = 0;
+
+   while(i < s.length()){
+       if(isalnum(s[i])) st.push(string(1,s[i]));
+
+       else{
+           string t1 = st.top() ; st.pop();
+           string t2 = st.top() ; st.pop();
+
+           string exp = s[i] + t2 + t1;
+            
+            st.push(exp);
+       }
+
+       i++;
+   }
+
+   return st.top();
+}
+
 
    
 };
