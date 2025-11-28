@@ -257,6 +257,31 @@ string postfixToPrefix(string &s){
 }
 
 
+string preToPost(string s) {
+  
+   stack<string> st;
+
+   int i = s.length()-1;
+
+   while(i >= 0){
+       if(isalnum(s[i])) st.push(string(1,s[i]));
+
+       else{
+           string t1 = st.top() ; st.pop();
+           string t2 = st.top() ; st.pop();
+
+           string exp =  t1 + t2 + s[i];
+            
+            st.push(exp);
+       }
+
+       i--;
+   }
+
+   return st.top();
+}
+
+
    
 };
 
