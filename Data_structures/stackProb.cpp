@@ -181,6 +181,34 @@ return ans;
     }
 
 
+    string postToInfix(string postfix) {
+    stack<string> st;
+
+    int i = 0;
+
+    while(i < postfix.length()){
+
+        if(isalnum(postfix[i])) st.push(string(1,postfix[i]));
+
+        else{
+            string t1 = st.top(); 
+            st.pop();
+            string t2 = st.top();
+            st.pop();
+
+            string newString = "(" + t2 + postfix[i] + t1+ ")";
+
+            st.push(newString);
+        }
+
+
+        i++;
+    }
+
+    return st.top();
+}
+
+
    
 };
 
