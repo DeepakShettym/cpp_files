@@ -1,5 +1,6 @@
 #include <stack>
 #include <string>
+#include <vector>
 
 using namespace std;
 class Solution {
@@ -297,6 +298,34 @@ vector<int> nextGreaterElement(vector<int>& arr, int n)
 	return ans;
 }
 
+
+vector<int> nextGreaterElementII(vector<int>& a) {
+    int n = a.size();
+
+    stack<int> st;
+
+    vector<int> ans(n);
+    for(int i = 2 * n - 1 ; i >=0 ; i--){
+        while(!st.empty() && a[i % n] >= st.top()){
+            st.pop();
+        }
+
+        if(i < n){
+            if(st.empty()){
+                ans[i] = -1;
+            }else{
+                ans[i] = st.top();
+            }
+        }
+
+        st.push(a[i % n]);
+
+    }
+
+    return ans;
+
+   
+}
 
    
 };
