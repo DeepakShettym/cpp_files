@@ -33,4 +33,32 @@ int getLongestSubarray(vector<int>& nums, int k){
     return len;
 
 
+    
+
+
+}
+// if only pos integer
+
+int getLongestSubarray2(vector<int>& arr, int k){
+    int maxlen = 0;
+
+    int sum = 0;
+
+    int l = 0;
+
+    for(int r = 0 ; r < arr.size() ; r++){
+        sum += arr[r];
+
+        while(sum > k){
+            sum -= arr[l];
+            l++;
+        }
+
+
+        if(sum == k){
+            maxlen = max(maxlen , r-l+1);
+        }
+    }
+
+    return maxlen;
 }
