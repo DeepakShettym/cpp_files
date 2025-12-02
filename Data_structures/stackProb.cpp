@@ -3,6 +3,31 @@
 #include <vector>
 
 using namespace std;
+
+class StockSpanner {
+public:
+
+    stack<pair<int , int>> st;
+
+    StockSpanner() {
+        
+    }
+    
+    int next(int price) {   
+        int ans = 1;
+        while(!st.empty() && price >= st.top().first){
+            ans += st.top().second;
+            st.pop();
+        }
+
+
+        pair<int , int > p = {price , ans};
+        st.push(p);
+        return ans;
+    }
+};
+
+
 class Solution {
 public:
     bool isValid(string s) {
@@ -382,7 +407,7 @@ vector<int> prevSmaller(vector<int>& arr) {
         return ans;
     }
 
-        int largestRectangleArea(vector<int>& heights) {
+    int largestRectangleArea(vector<int>& heights) {
         stack<int> st;
         int maxi = 0;
         int n = heights.size();
