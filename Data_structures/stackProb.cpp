@@ -354,7 +354,6 @@ vector<int> prevSmaller(vector<int>& arr) {
         return ans;
     }
 
-
       vector<int> nextSmallerEle(vector<int>& arr) {
         //  code here
         int n = arr.size();
@@ -383,7 +382,78 @@ vector<int> prevSmaller(vector<int>& arr) {
         return ans;
     }
 
-   
+        int largestRectangleArea(vector<int>& heights) {
+        stack<int> st;
+        int maxi = 0;
+        int n = heights.size();
+
+        for (int i = 0; i < n; i++) {
+
+            while (!st.empty() && heights[i] < heights[st.top()]) {
+
+                int compute = st.top();
+                st.pop();
+
+                int h = heights[compute];
+
+                int nse = i;             
+                int pse = st.empty() ? -1 : st.top();
+
+                int w = nse - pse - 1;
+                maxi = max(maxi, h * w);
+            }
+
+            st.push(i);
+        }
+
+        
+        while (!st.empty()) {
+
+            int compute = st.top();
+            st.pop();
+
+            int h = heights[compute];
+
+            int nse = n;
+            int pse = st.empty() ? -1 : st.top();
+
+            int w = nse - pse - 1;
+            maxi = max(maxi, h * w);
+        }
+
+        return maxi;
+    }
+
+    int maximalRectangle(vector<vector<char>>& matrix) {
+        vector<vector<int>> prefixSum(matrix.size() , vector<int>(matrix[0].size() , -1));
+
+        for(int j = 0 ; j < matrix[0].size() ; j++){
+            int sum = 0;
+
+            for(int i = 0 ; i < matrix.size() ; i++){
+               int num = (matrix[i][j] == '1') ? 1 : 0;
+
+                sum += num;
+
+                if(num == 0){
+                    sum = 0;
+                }
+
+                prefixSum[i][j] = sum;
+
+            }
+        }
+
+
+        int maxi = 0;
+
+        for(int k = 0 ; k < matrix.size() ; k++){
+            maxi = max(maxi , largestRectangleArea(prefixSum[k]));
+        }
+
+
+        return maxi;
+    }
 };
 
  int main(){
