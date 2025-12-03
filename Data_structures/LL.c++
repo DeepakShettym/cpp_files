@@ -77,20 +77,28 @@ Node<int>* addTwoLists(Node<int>* first, Node<int>* second) {
 
    return head;
 
+}
+
+Node<int> *oddEvenLinkedList(Node<int> *head) {
+    if(head == nullptr || head->next == nullptr){
+        return head;
+    }
 
 
+    Node<int>* odd = head;
+    Node<int>* even = head->next;
+    Node<int>* evenHead = head->next;
 
 
+    while(even != nullptr && even->next !=nullptr){
+        odd->next = odd->next->next;
+        even->next = even->next->next;
 
+        odd = odd->next;
+        even = even->next;
 
+    }
 
-
-
-
-
-
-
-
-
-
+    odd->next = evenHead;
+    return head;
 }
