@@ -103,6 +103,71 @@ Node<int> *oddEvenLinkedList(Node<int> *head) {
     return head;
 }
 
+bool isPalindrome(Node<int> *head)
+{
+    
+    if(head == nullptr || head->next == nullptr){
+        return true;
+    }
+
+
+    Node<int>* fast = head;
+    Node<int>* slow = head;
+
+
+    while(fast!=nullptr && fast->next != nullptr){
+        fast = fast->next->next;
+        slow = slow->next;
+
+    }
+        slow->next = reverseLinkedList(slow->next);
+
+        Node<int>* temp1 = head;
+
+        Node<int>* temp2 = slow->next;
+
+        while(temp2 !=nullptr){
+            if(temp1->data != temp2->data){
+                return false;
+            }
+
+            temp1 = temp1->next;
+            temp2 = temp2->next;
+        }
+    return true;
+
+    
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+}
+
 
 
  struct ListNode {
