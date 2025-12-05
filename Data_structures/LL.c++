@@ -103,6 +103,35 @@ Node<int> *oddEvenLinkedList(Node<int> *head) {
     return head;
 }
 
+int lengthOfLoop(Node<int> *head) {
+    if(head == NULL){
+        return 0;
+    }
+
+    Node<int>* f = head;
+    Node<int>* s = head;
+
+    while(f != NULL && f->next!=NULL){
+        f = f->next->next;
+        s = s->next;
+
+        if(f == s){
+            int len = 1;
+            s = s->next;
+
+            while(s != f){
+                s = s->next;
+                len++;
+            }
+            return len;
+        }
+    }
+
+    return 0;
+}
+
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                        
+
 bool isPalindrome(Node<int> *head)
 {
     
@@ -136,37 +165,17 @@ bool isPalindrome(Node<int> *head)
         }
     return true;
 
+}
+
     
 
+ 
 
 
 
 
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-}
 
 
 
@@ -215,5 +224,61 @@ public:
         return head;
         
         }
+
+
+        ListNode* deleteMiddle(ListNode* head) {
+        if(head == NULL || head->next == NULL){
+            return NULL;
+        }
+
+        ListNode* slow = head;
+        ListNode* fast = head;
+
+        while(fast && fast->next){
+            fast = fast->next->next;
+            slow = slow->next;
+        }
+
+        ListNode* temp = head;
+
+        while(temp->next != slow){
+            temp = temp->next;
+        }
+
+
+        temp->next = slow->next;
+        delete(slow);
+
+
+        return head;
+
+
+    }
+
+    Node<int> *firstNode(Node<int> *head)
+{
+    Node<int>* fast = head;
+    Node<int>* slow = head;
+
+
+    while(fast && fast->next){
+        slow = slow->next;
+        fast = fast->next->next;
+
+        if(fast == slow){
+            slow = head;
+            while(fast != slow){
+                slow = slow->next;
+                fast = fast->next;
+            }
+
+            return slow;
+        }
+    }
+
+    return NULL;
+}
+
+
     
 };
