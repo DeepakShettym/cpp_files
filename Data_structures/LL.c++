@@ -17,6 +17,31 @@ using namespace std;
     };
 
 
+    Node<int> *firstNode(Node<int> *head)
+    {
+    Node<int> *fast = head;
+    Node<int> *slow = head;
+
+
+    while(fast && fast->next){
+        slow = slow->next;
+        fast = fast->next->next;
+
+        if(fast == slow){
+            slow = head;
+            while(fast != slow){
+                slow = slow->next;
+                fast = fast->next;
+            }
+
+            return slow;
+        }
+    }
+
+    return NULL;
+}
+
+
 Node<int>* reverseLinkedList(Node<int>* head) {
     Node<int>* prev = nullptr;
     Node<int>* curr = head;
@@ -255,30 +280,56 @@ public:
 
     }
 
-    Node<int> *firstNode(Node<int> *head)
-{
-    Node<int>* fast = head;
-    Node<int>* slow = head;
+ 
 
+ class Node {
+    public:
+     int data;
+       Node *prev;
+       Node *next;
+       Node() {
+           this->data = 0;
+           this->prev = NULL;
+           this->next = NULL;
+       }
+       Node(int data) {
+           this->data = data;
+           this->prev = NULL;
+           this->next = NULL;
+       }
+       Node (int data, Node *next, Node *prev) {
+           this->data = data;
+           this->prev = prev;
+           this->next = next;
+       }
+  };
+  
+Node * deleteAllOccurrences(Node* head, int k) {
+    Node* temp = head;
 
-    while(fast && fast->next){
-        slow = slow->next;
-        fast = fast->next->next;
-
-        if(fast == slow){
-            slow = head;
-            while(fast != slow){
-                slow = slow->next;
-                fast = fast->next;
+    while(temp != NULL){
+        if(temp->data == k){
+            if(temp == head){
+              head = temp->next;
             }
 
-            return slow;
+            Node *prevnode = temp->prev;
+            Node *nextnode = temp->next;
+
+            if(prevnode) prevnode->next = nextnode;
+            if(nextnode) nextnode->prev = prevnode;
+
+            delete(temp);
+
+            temp = nextnode;
+        }else{
+            temp = temp->next;
         }
     }
 
-    return NULL;
-}
 
+    return head;
+}
 
     
 };
