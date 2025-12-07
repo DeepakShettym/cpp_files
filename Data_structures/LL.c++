@@ -280,32 +280,36 @@ public:
 
     }
 
+};
+
  
 
- class Node {
+ class NodeDLL {
     public:
      int data;
-       Node *prev;
-       Node *next;
-       Node() {
+       NodeDLL *prev;
+       NodeDLL *next;
+       NodeDLL() {
            this->data = 0;
            this->prev = NULL;
            this->next = NULL;
        }
-       Node(int data) {
+       NodeDLL(int data) {
            this->data = data;
            this->prev = NULL;
            this->next = NULL;
        }
-       Node (int data, Node *next, Node *prev) {
+       NodeDLL (int data, NodeDLL *next, NodeDLL *prev) {
            this->data = data;
            this->prev = prev;
            this->next = next;
        }
   };
+
   
-Node * deleteAllOccurrences(Node* head, int k) {
-    Node* temp = head;
+  
+NodeDLL * deleteAllOccurrences(NodeDLL* head, int k) {
+    NodeDLL* temp = head;
 
     while(temp != NULL){
         if(temp->data == k){
@@ -313,8 +317,8 @@ Node * deleteAllOccurrences(Node* head, int k) {
               head = temp->next;
             }
 
-            Node *prevnode = temp->prev;
-            Node *nextnode = temp->next;
+            NodeDLL *prevnode = temp->prev;
+            NodeDLL *nextnode = temp->next;
 
             if(prevnode) prevnode->next = nextnode;
             if(nextnode) nextnode->prev = prevnode;
@@ -331,5 +335,50 @@ Node * deleteAllOccurrences(Node* head, int k) {
     return head;
 }
 
+Node<int> *rotate(Node<int>  *head, int k) {  
+     if(head == nullptr || head->next == nullptr || k == 0){
+          return head;
+     }
+
+     int len = 0;
+
+     Node<int> * temp = head;
+
+     while(temp != NULL){
+          temp = temp->next;
+          len++;
+     }
+
+
+     k = k % len;
+
+     if(k == 0){
+          return head;
+     }
+
+     Node<int> * slow = head;
+     Node<int> * fast = head;
+
+     for(int i = 0 ; i < k ; i++){
+          fast = fast->next;
+     }
+
+     while(fast->next != nullptr){
+          slow = slow->next;
+          fast = fast->next;
+     }
+
+     Node<int> * newHead =  slow->next;
+
+     slow->next = nullptr;
+
+     fast->next = head;
+
+     head = newHead;
+
+     return newHead;
+
+
+}
+
     
-};
