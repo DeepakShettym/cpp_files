@@ -381,4 +381,45 @@ Node<int> *rotate(Node<int>  *head, int k) {
 
 }
 
+Node<int>* sortTwoLists(Node<int>* first, Node<int>* second)
+{   if(first == NULL && second == NULL){
+    return first;
+}
+    if(first == NULL){
+        return second;
+    }
+
+    if(second == NULL){
+        return first;
+    }
+    Node<int>* dummy = new Node(-1);
+    Node<int>* tail = dummy;
+    
+    Node<int>* temp1 = first;
+    Node<int>* temp2 = second;
+
+    while(temp1 && temp2){
+        if(temp1->data < temp2->data){
+            tail->next = temp1;
+            temp1 = temp1->next;
+        }else{
+            tail->next = temp2;
+            temp2 = temp2->next;
+        }
+
+        
+        tail = tail->next;
+    }
+
+    if(temp1){
+        tail->next = temp1;
+    }
+
+    if(temp2){
+        tail->next = temp2;
+    }
+
+    return dummy->next;
+}
+
     
