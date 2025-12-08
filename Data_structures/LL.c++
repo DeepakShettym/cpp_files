@@ -192,18 +192,6 @@ bool isPalindrome(Node<int> *head)
 
 }
 
-    
-
- 
-
-
-
-
-
-
-
-
-
  struct ListNode {
     int val;
     ListNode *next;
@@ -421,5 +409,68 @@ Node<int>* sortTwoLists(Node<int>* first, Node<int>* second)
 
     return dummy->next;
 }
+
+class NodeChild {
+  public:
+		int data;
+		NodeChild *next;
+ 		NodeChild *child;
+		NodeChild() : data(0), next(nullptr), child(nullptr){};
+		NodeChild(int x) : data(x), next(nullptr), child(nullptr) {}
+		NodeChild(int x, NodeChild *next, NodeChild *child) : data(x), next(next), child(child) {}
+  };
+
+NodeChild* merge2list(NodeChild* list1 , NodeChild* list2){
+	NodeChild* dummy = new NodeChild(-1);
+	NodeChild* tail = dummy;
+
+	NodeChild* l1 = list1;
+	NodeChild* l2 = list2;
+
+
+	while(l1 && l2){
+		if(l1->data < l2->data){
+			tail->child = l1;
+			l1 = l1->child;
+		}else{
+			tail->child = l2;
+			l2 = l2->child;
+		}
+
+		tail = tail->child;
+	}
+
+	if(l1) tail->child = l1;
+
+	if(l2) tail->child = l2;
+
+	
+
+	
+
+	return dummy->child;
+}
+
+
+NodeChild* flattenLinkedList(NodeChild* head) 
+{
+	if(head == nullptr || head->next == nullptr){
+		return head;
+	}
+
+    NodeChild* temp = head;
+	NodeChild* newNode = nullptr;
+
+    while(temp != nullptr){
+		newNode = merge2list(newNode , temp);
+		NodeChild* prev = temp;
+		temp = temp->next;
+		prev->next = nullptr;
+	}
+
+	return newNode;
+	
+}
+
 
     
