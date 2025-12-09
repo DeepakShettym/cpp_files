@@ -561,7 +561,58 @@ Node<int>* sortLL(Node<int> *head)
 
 
 }
+class NodeRandom {
+public:
+    int val;
+    NodeRandom* next;
+    NodeRandom* random;
+    
+    NodeRandom(int _val) {
+        val = _val;
+        next = NULL;
+        random = NULL;
+    }
+};
 
+
+    NodeRandom* copyRandomList(NodeRandom* head) {
+        if(head == NULL){
+            return head;
+        }
+        NodeRandom* temp = head;
+        
+        while(temp){
+            NodeRandom* newNode = new NodeRandom(temp->val);
+            newNode->next = temp->next;
+            temp->next = newNode;
+            temp = newNode->next;
+        }
+
+
+        temp = head;
+
+
+        while(temp){
+            if(temp->random) temp->next->random = temp->random->next;
+            temp = temp->next->next;
+        }
+
+        temp = head;
+
+        NodeRandom* dummy = new NodeRandom(-1);
+        NodeRandom* tail  = dummy;
+        while(temp){
+            tail->next = temp->next;
+            temp->next = temp->next->next;
+            tail = tail->next;
+            temp = temp->next;
+        }
+
+
+        return dummy->next;
+
+
+    }
 
 
 
