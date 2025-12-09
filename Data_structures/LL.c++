@@ -293,7 +293,7 @@ public:
 
 
             if(node->next){
-                pq.push(node);
+                pq.push(node->next);
             }
 
         }
@@ -504,6 +504,65 @@ NodeChild* flattenLinkedList(NodeChild* head)
 	return newNode;
 	
 }
+
+Node<int>* merge(Node<int>* left , Node<int>* right){
+	Node<int>* dummy = new Node(-1);
+	Node<int>* tail = dummy;
+
+	while(left && right){
+		if(left->data < right->data){
+			tail->next = left;
+			left = left->next;
+		}else{
+			tail->next = right;
+			right = right->next;
+		}
+
+		tail = tail->next;
+	}
+
+	if(left) tail->next = left;
+
+	if(right) tail->next = right;
+
+	return dummy->next;
+
+}
+Node<int>* findMidY(Node<int>* head){
+	Node<int>* fast = head->next;
+	Node<int>* slow = head;
+
+
+	while(fast && fast->next){
+		fast = fast->next->next;
+		slow = slow->next;
+	}
+
+	return slow;
+}
+
+Node<int>* sortLL(Node<int> *head)
+{
+	if(head == NULL || head->next == NULL){
+		return head;
+	}
+
+		Node<int>* middle = findMidY(head);
+
+		Node<int>* left = head;
+		Node<int>* right = middle->next;
+
+		middle->next = NULL;
+
+		left = sortLL(left);
+		right = sortLL(right);
+
+		return merge(left, right);
+
+
+}
+
+
 
 
     
