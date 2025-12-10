@@ -1,4 +1,5 @@
 #include<queue>
+#include<stack>
 using namespace std;
 
 
@@ -45,3 +46,38 @@ vector<int> levelOrder(TreeNode<int> * root){
 
 
 }
+
+class Node {
+  public:
+    int data;
+    Node* left;
+    Node* right;
+
+    Node(int val) {
+        data = val;
+        left = right = NULL;
+    }
+};
+
+    vector<int> preOrder(Node* root) {
+        vector<int> ans;
+        
+        if(root==NULL){
+            return ans;
+        }
+        stack<Node*> st;
+        st.push(root);
+
+       
+        while(!st.empty()){
+          Node* top = st.top();
+          st.pop();
+          
+          ans.push_back(top->data);
+          
+          if(top->right) st.push(top->right);
+          if(top->left) st.push(top->left);
+       }
+       
+        return ans;
+    }
