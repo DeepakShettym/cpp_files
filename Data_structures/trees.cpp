@@ -17,6 +17,8 @@ template <typename T>
         }
 };
 
+
+
 vector<int> levelOrder(TreeNode<int> * root){
     vector<int> ans;
     if(root == NULL){
@@ -147,3 +149,47 @@ class Node {
         
         return ans;
     }
+
+    vector<vector<int>> getTreeTraversal(TreeNode<int> *root){
+    vector<vector<int>> ans;
+
+    vector<int> pre , ino , pos;
+
+    stack<pair<TreeNode<int>* , int>> st;
+
+    st.push({root , 1});
+
+    while(!st.empty()){
+        pair<TreeNode<int>* ,int> top = st.top();
+        st.pop();
+        TreeNode<int>* node = top.first;
+        int num = top.second;
+
+        if(num == 1){
+            pre.push_back(node->data);
+            num++;
+            st.push({node ,num });
+
+            if(node->left) st.push({node->left , 1});
+        }else if(num == 2){
+            ino.push_back(node->data);
+            num++;
+            st.push({node , num});
+
+            if(node->right) st.push({node->right , 1});
+        }else{
+            pos.push_back(node->data);
+        }
+    }
+
+
+    ans.push_back(ino);
+    ans.push_back(pre);
+    ans.push_back(pos);
+
+
+    return ans;
+
+
+
+}
