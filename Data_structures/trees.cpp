@@ -114,3 +114,36 @@ class Node {
         
         return ans;
     }
+
+
+    vector<int> postOrder(Node* root) {
+        // code here
+        vector<int> ans;
+        
+        if(root == NULL){
+            return ans;
+        }
+        
+        stack<Node*> st1;
+        stack<Node*> st2;
+        st1.push(root);
+        
+        while(!st1.empty()){
+            Node* top = st1.top();
+            st1.pop();
+            
+            st2.push(top);
+            
+            if(top->left) st1.push(top->left);
+            
+            if(top->right) st1.push(top->right);
+            
+        }
+        
+        while(!st2.empty()){
+            ans.push_back(st2.top()->data);
+            st2.pop();
+        }
+        
+        return ans;
+    }
