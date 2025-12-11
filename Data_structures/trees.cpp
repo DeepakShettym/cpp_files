@@ -81,3 +81,36 @@ class Node {
        
         return ans;
     }
+
+    vector<int> inOrder(Node* root) {
+        vector<int> ans;
+        if(root == NULL){
+            return ans;
+        }
+        // code here
+        stack<Node*> st;
+        
+        
+        
+        Node* node = root;
+        
+        
+        while(true){
+            if(node != NULL){
+                st.push(node);
+                node = node->left;
+            }else{
+                
+                if(st.empty() == true)       break;
+
+                Node* top = st.top();
+                st.pop();
+                
+                ans.push_back(top->data);
+                node = node->right;
+            }
+        }
+        
+        
+        return ans;
+    }
