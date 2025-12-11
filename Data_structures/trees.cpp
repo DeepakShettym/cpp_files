@@ -150,7 +150,8 @@ class Node {
         return ans;
     }
 
-    vector<vector<int>> getTreeTraversal(TreeNode<int> *root){
+vector<vector<int>> getTreeTraversal(TreeNode<int> *root){
+
     vector<vector<int>> ans;
 
     vector<int> pre , ino , pos;
