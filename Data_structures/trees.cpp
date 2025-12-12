@@ -150,6 +150,8 @@ class Node {
         return ans;
     }
 
+   
+
 vector<vector<int>> getTreeTraversal(TreeNode<int> *root){
 
     vector<vector<int>> ans;
@@ -193,4 +195,18 @@ vector<vector<int>> getTreeTraversal(TreeNode<int> *root){
 
 
 
+}
+
+
+int findMaxDepth(TreeNode<int> *root) 
+{
+    if(root == NULL){
+        return 0;
+    }
+
+
+    int left = findMaxDepth(root->left);
+    int right = findMaxDepth(root->right);
+
+    return max(left , right) + 1;
 }
