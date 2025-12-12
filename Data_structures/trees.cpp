@@ -1,5 +1,6 @@
 #include<queue>
 #include<stack>
+#include<math.h>
 using namespace std;
 
 
@@ -209,4 +210,31 @@ int findMaxDepth(TreeNode<int> *root)
     int right = findMaxDepth(root->right);
 
     return max(left , right) + 1;
+}
+
+
+bool isBalancedBT(TreeNode<int>* root){
+    if(root == NULL){
+        return true;
+    }
+
+    int leftHeight  = findMaxDepth(root->left);
+    int rightHeight = findMaxDepth(root->right);
+
+
+    if(abs(leftHeight - rightHeight) > 1){
+        return false;
+    }
+
+
+    int left = isBalancedBT(root->left);
+
+    int right = isBalancedBT(root->right);
+
+
+    if(!left || !right){
+        return false;
+    }
+
+    return true;
 }
