@@ -238,3 +238,28 @@ bool isBalancedBT(TreeNode<int>* root){
 
     return true;
 }
+
+int findMaxDepth2(TreeNode<int> *root) 
+{
+    if(root == NULL){
+        return 0;
+    }
+
+
+    int left = findMaxDepth2(root->left);
+    int right = findMaxDepth2(root->right);
+
+    if(left == -1 || right == -1){
+        return -1;
+    }
+
+    if(abs(left - right) > 1){
+        return -1;
+    }
+
+    return max(left , right) + 1;
+}
+
+bool isBalancedBT2(TreeNode<int>* root){
+   return (findMaxDepth2(root) != -1);
+}
