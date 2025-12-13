@@ -1,6 +1,7 @@
 #include<queue>
 #include<stack>
 #include<math.h>
+#include<vector>
 using namespace std;
 
 
@@ -262,4 +263,53 @@ int findMaxDepth2(TreeNode<int> *root)
 
 bool isBalancedBT2(TreeNode<int>* root){
    return (findMaxDepth2(root) != -1);
+}
+
+TreeNode<int>* zigZagTraversal(TreeNode<int>*root)
+{
+    vector<int> result;
+    if(root == NULL){
+        return result;
+    }
+    queue<TreeNode<int>**> q;
+
+    
+
+    bool zigzag = true;
+
+
+    q.push(root);
+
+    while(!q.empty()){
+        
+
+        int size = q.size();
+        vector<int> ans(size);
+
+
+        for(int i = 0 ; i < size ; i++){
+            TreeNode<int>* front = q.front();
+            q.pop();
+
+            int index = (zigzag) ? i  : (size  -  i) - 1;
+
+            ans[index] = front->data;
+
+
+            if(front->left) q.push(front->left);
+
+            if(front->right) q.push(front->right);
+
+        }
+
+
+        for(auto &item : ans){
+            result.push_back(item);
+        }
+
+        zigzag = !zigzag;
+    }
+
+
+    return result;
 }
