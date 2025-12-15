@@ -2,6 +2,7 @@
 #include<stack>
 #include<math.h>
 #include<vector>
+#include<map>
 using namespace std;
 
 
@@ -265,13 +266,13 @@ bool isBalancedBT2(TreeNode<int>* root){
    return (findMaxDepth2(root) != -1);
 }
 
-TreeNode<int>* zigZagTraversal(TreeNode<int>*root)
+vector<int> zigZagTraversal(TreeNode<int>*root)
 {
     vector<int> result;
     if(root == NULL){
         return result;
     }
-    queue<TreeNode<int>**> q;
+    queue<TreeNode<int>*> q;
 
     
 
@@ -312,4 +313,49 @@ TreeNode<int>* zigZagTraversal(TreeNode<int>*root)
 
 
     return result;
+}
+
+vector<int> getTopView(TreeNode<int> *root)
+{
+    vector<int> ans;
+
+    if(root == NULL){
+        return ans;
+    }
+
+    map<int , int> mmap;
+
+    queue<pair<TreeNode<int>* , int>>q;
+
+
+    q.push({root , 0});
+
+    while(!q.empty()){
+        pair<TreeNode<int>* , int> fornt = q.front();
+        q.pop();
+
+        TreeNode<int>* node = fornt.first;
+        int col = fornt.second;
+
+
+        if(mmap.find(col) == mmap.end()){
+            mmap[col] = node->data;
+        }
+
+
+        if(node->left) q.push({node->left , col - 1});
+
+        if(node->right) q.push({node->right , col + 1});
+
+
+    }
+
+    for(auto &item : mmap){
+        ans.push_back(item.second);
+    }
+
+
+    return ans;
+
+
 }
