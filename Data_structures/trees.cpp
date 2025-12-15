@@ -394,7 +394,48 @@ vector<int> bottomView(TreeNode<int> * root){
         return ans;
 }
 
+void solvegetLeftView(TreeNode<int>* root , int level , vector<int> &ans){
+    if(root == NULL){
+        return;
+    }
+
+    if(ans.size() == level) ans.push_back(root->data);
+
+    solvegetLeftView(root->left ,level + 1 , ans);
+    solvegetLeftView(root->right , level + 1 , ans);
+}
 vector<int> getLeftView(TreeNode<int> *root)
+{      vector<int> ans;    
+
+       if(root == NULL){
+           return ans;
+       } 
+       solvegetLeftView(root , 0 , ans);
+       return ans;
+}
+
+void solvegetRightView(TreeNode<int>* root , int level , vector<int> &ans){
+    if(root == NULL){
+        return;
+    }
+
+    if(ans.size() == level) ans.push_back(root->data);
+    
+    solvegetRightView(root->right , level + 1 , ans);
+    solvegetRightView(root->left ,level + 1 , ans);
+    
+}
+vector<int> getLeftView(TreeNode<int> *root)
+{      vector<int> ans;    
+
+       if(root == NULL){
+           return ans;
+       } 
+       solvegetRightView(root , 0 , ans);
+       return ans;
+}
+
+vector<int> getLeftViewiterative(TreeNode<int> *root)
 {   
         vector<int> ans;
 
