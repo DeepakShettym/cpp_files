@@ -326,8 +326,6 @@ vector<int> getTopView(TreeNode<int> *root)
     map<int , int> mmap;
 
     queue<pair<TreeNode<int>* , int>>q;
-
-
     q.push({root , 0});
 
     while(!q.empty()){
@@ -358,4 +356,40 @@ vector<int> getTopView(TreeNode<int> *root)
     return ans;
 
 
+}
+
+vector<int> bottomView(TreeNode<int> * root){
+    vector<int> ans;
+
+    if(root == NULL){
+        return ans;
+    }
+
+
+    map<int , int> mmap;
+
+    queue<pair<TreeNode<int>* , int>> q;
+    q.push({root , 0});
+    while(!q.empty()){
+
+        pair<TreeNode<int>* , int> front = q.front();
+        q.pop();
+
+        TreeNode<int>* node = front.first;
+        int col = front.second;
+
+        mmap[col] = node->data;
+
+
+        if(node->left) q.push({node->left , col - 1});
+
+        if(node->right) q.push({node->right , col + 1});
+    }
+
+        for(auto &item : mmap){
+            ans.push_back(item.second);
+        }
+
+
+        return ans;
 }
