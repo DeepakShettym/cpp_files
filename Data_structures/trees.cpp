@@ -279,6 +279,7 @@ vector<int> zigZagTraversal(TreeNode<int>*root)
     bool zigzag = true;
 
 
+
     q.push(root);
 
     while(!q.empty()){
@@ -420,7 +421,7 @@ void solvegetRightView(TreeNode<int>* root , int level , vector<int> &ans){
     }
 
     if(ans.size() == level) ans.push_back(root->data);
-    
+
     solvegetRightView(root->right , level + 1 , ans);
     solvegetRightView(root->left ,level + 1 , ans);
     
@@ -463,4 +464,22 @@ vector<int> getLeftViewiterative(TreeNode<int> *root)
         }
 
         return ans;
+}
+
+bool solveisSymmetric(TreeNode<int>* p , TreeNode<int>* q){
+   if(p == NULL || q == NULL){
+        return (p == q);
+   }
+
+
+   return (p->data == q->data) && solveisSymmetric(p->left , q->right) && solveisSymmetric(p->right , q->left);
+}
+
+bool isSymmetric(TreeNode<int>* root)
+{
+        if(root == NULL){
+            return true;
+        }    
+
+        return solveisSymmetric(root->left , root->right);
 }
