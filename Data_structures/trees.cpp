@@ -483,3 +483,34 @@ bool isSymmetric(TreeNode<int>* root)
 
         return solveisSymmetric(root->left , root->right);
 }
+
+bool solvepathInATree(TreeNode<int>* root, int x, vector<int> &ans) {
+    if (root == NULL) {
+        return false;
+    }
+
+    ans.push_back(root->data);
+
+    if (root->data == x) {
+        return true;
+    }
+
+    if (solvepathInATree(root->left, x, ans) ||
+        solvepathInATree(root->right, x, ans)) {
+        return true;
+    }
+
+ 
+    ans.pop_back();
+    return false;
+}
+
+vector<int> pathInATree(TreeNode<int> *root, int x) {
+    vector<int> ans;
+    if (root == NULL) {
+        return ans;
+    }
+    solvepathInATree(root, x, ans);
+    return ans;
+}
+
