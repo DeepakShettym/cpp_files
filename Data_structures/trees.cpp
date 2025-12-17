@@ -514,3 +514,59 @@ vector<int> pathInATree(TreeNode<int> *root, int x) {
     return ans;
 }
 
+  TreeNode<int>* lowestCommonAncestor(TreeNode<int>* root, TreeNode<int>* p, TreeNode<int>* q) {
+    if (root == NULL || root == p || root == q) {
+        return root;
+    }
+
+    TreeNode<int>* left  = lowestCommonAncestor(root->left, p, q);
+    TreeNode<int>* right = lowestCommonAncestor(root->right, p, q);
+
+    if (left == NULL) {
+        return right;
+    }
+    if (right == NULL) {
+        return left;
+    }
+
+   
+    return root;
+}
+
+
+int widthOfBinaryTree(TreeNode<int>* root) {
+        if(root == NULL){
+            return 0;
+        }
+        queue<pair<TreeNode<int>* , long long>> q;
+        int ans = 0; 
+        q.push({root , 0});
+
+        while(!q.empty()){
+            int size = q.size();
+            int min = q.front().second;
+            int first; int last;
+
+            for(int i = 0 ; i < size ; i++){
+               TreeNode<int>* node = q.front().first;
+               long long curr_id = q.front().second - min;
+               q.pop();
+
+               if(i == 0){
+                first = curr_id;
+               }
+
+               if(i == size -1){
+                last = curr_id;
+               }
+
+               if(node->left) q.push({node->left , (curr_id*2 + 1)});
+               if(node->right) q.push({node->right , (curr_id*2 + 2)});
+
+            }
+
+            ans = max(ans , last - first + 1);
+        }
+
+        return ans;
+    }
