@@ -570,3 +570,34 @@ int widthOfBinaryTree(TreeNode<int>* root) {
 
         return ans;
     }
+
+    void changeTree(TreeNode < int > * root) {
+    if(root == NULL || (root->left == NULL && root->right == NULL)){
+        return;
+    }
+
+    int child = 0;
+
+    if(root->left) child += root->left->data;
+    if(root->right) child += root->right->data;
+
+    if(child >= root->data) {
+        root->data = child;
+    }
+    else {
+        if(root->left) root->left->data = root->data;
+        if(root->right) root->right->data = root->data;
+
+    }
+
+    changeTree(root->left);
+    changeTree(root->right);
+
+    int total = 0;
+    if(root->left) total += root->left->data;
+    if(root->right) total += root->right->data;
+
+    root->data = total;
+
+    
+}
