@@ -601,3 +601,76 @@ int widthOfBinaryTree(TreeNode<int>* root) {
 
     
 }
+
+   vector<int> distanceK(TreeNode<int>* root, TreeNode<int>* target, int k) {
+        map<TreeNode<int>* , TreeNode<int>*> parent;
+        parent[root] = NULL;
+        queue<TreeNode<int>*> q;
+        q.push(root);
+
+
+        while(!q.empty()){
+            TreeNode<int>* front = q.front();
+            q.pop();
+            
+            if(front->left) {
+                parent[front->left] = front;
+                q.push(front->left);
+                }
+
+            if(front->right) {
+                parent[front->right] = front;
+                q.push(front->right);
+                }
+            }
+
+            q.push(target);
+            map<TreeNode<int>* , bool> v;
+            v[target] = true;
+            int dist = 0;
+
+
+            while(!q.empty()){
+                int size = q.size();
+                if(dist == k) break;
+                
+                while(size--){
+                    TreeNode<int>* f = q.front();
+                    q.pop();
+                    TreeNode<int>* p = parent[f];
+
+                    if(p && !v[p]){
+                        q.push(p);
+                        v[p] = true;
+                    }
+
+                    TreeNode<int>* l = f->left;
+
+                    if(l && !v[l]){
+                        q.push(l);
+                        v[l] = true;
+                    }
+
+                    TreeNode<int>* r = f->right;
+
+                    if(r && !v[r]){
+                        q.push(r);
+                        v[r] = true;
+                    }
+                }
+
+                dist++;
+            }
+
+            vector<int> ans;
+
+            while(!q.empty()){
+                ans.push_back(q.front()->data);
+                q.pop();
+            } 
+
+
+            return ans;
+        
+
+        }
