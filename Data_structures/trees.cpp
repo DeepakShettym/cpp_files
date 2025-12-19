@@ -3,6 +3,7 @@
 #include<math.h>
 #include<vector>
 #include<map>
+#include<unordered_map>
 using namespace std;
 
 
@@ -674,3 +675,70 @@ int widthOfBinaryTree(TreeNode<int>* root) {
         
 
         }
+
+        int amountOfTime(TreeNode<int>* root, int start) {
+        unordered_map<TreeNode<int>* , TreeNode<int>*> parent;
+        queue<TreeNode<int>*> q;
+
+        q.push(root);
+        parent[root] = NULL;
+        TreeNode<int>* startNode = NULL;
+
+        while(!q.empty()){
+            TreeNode<int>* node = q.front();
+            q.pop();
+            if(node->data == start){
+                startNode = node;
+            }
+            
+
+            if(node->left) {
+                parent[node->left] = node;
+                q.push(node->left);
+            }
+            if(node->right){
+                parent[node->right] = node;
+                q.push(node->right);
+            } 
+        } 
+
+        int minutes = -1;
+
+        unordered_map<TreeNode<int>* , bool> v;
+        v[startNode] = true;
+        q.push(startNode);
+
+        while(!q.empty()){
+            int size = q.size();
+            minutes += 1;
+
+            while(size--){
+                TreeNode<int>* f = q.front();
+                q.pop();
+
+                TreeNode<int>* p = parent[f];
+
+                if(p && !v[p]){
+                    q.push(p);
+                    v[p] = true;
+                }
+
+                TreeNode<int>* l = f->left;
+
+                if(l && !v[l]){
+                    q.push(l);
+                    v[l] = true;
+                }
+
+                TreeNode<int>* r = f->right;
+
+                if(r && !v[r]){
+                    q.push(r);
+                    v[r] = true;
+                }
+            }
+        }
+
+
+        return minutes;
+    }
