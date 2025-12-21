@@ -742,3 +742,39 @@ int widthOfBinaryTree(TreeNode<int>* root) {
 
         return minutes;
     }
+
+
+    TreeNode<int>* solve(
+    vector<int>& inorder,
+    vector<int>& preorder,
+    int s,
+    int e,
+    int& idx,
+    unordered_map<int,int>& mapp
+) {
+    if (s > e) {
+        return NULL;
+    }
+
+    int val = preorder[idx++]; 
+    TreeNode<int>* root = new TreeNode<int>(val);
+
+    int index = mapp[val];
+  
+
+    root->left  = solve(inorder, preorder, s, index - 1, idx ,mapp);
+    root->right = solve(inorder, preorder, index + 1, e, idx,mapp);
+
+    return root;
+}
+
+TreeNode<int>* buildBinaryTree(vector<int>& inorder, vector<int>& preorder)
+{
+    unordered_map<int , int> mapp;
+
+    for(int i = 0 ; i < inorder.size() ; i++){
+        mapp[inorder[i]] = i;
+    }
+    int idx = 0;                
+    return solve(inorder, preorder, 0, inorder.size() - 1, idx , mapp);
+}
