@@ -875,3 +875,22 @@ int Floor(TreeNode<int> *root, int input)
 	return floor;
 }
 
+
+int findCeil(TreeNode<int> *node, int x){
+    int ceil = -1;
+
+    while(node != NULL){
+        if(node->data == x){
+            return x;
+        }
+
+        if(node->data > x){
+            ceil = node->data;
+            node = node->left;
+        }else{
+            node = node->right;
+        }
+    }
+    return ceil;
+}
+
