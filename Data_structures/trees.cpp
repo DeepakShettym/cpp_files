@@ -854,3 +854,24 @@ bool searchInBST(TreeNode<int> *root, int x) {
 
     return root;
 }
+
+int Floor(TreeNode<int> *root, int input)
+{
+	int floor = -1;
+	while(root != NULL){
+		if(root->data == input){
+			return input;
+		}
+
+		if(root->data > input){
+			root = root->left;
+		}else{
+			floor = root->data;
+			root = root->right;
+			
+		}
+	}
+
+	return floor;
+}
+
