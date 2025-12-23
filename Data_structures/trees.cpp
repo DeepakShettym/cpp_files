@@ -894,3 +894,32 @@ int findCeil(TreeNode<int> *node, int x){
     return ceil;
 }
 
+TreeNode<int>* insertionInBST(TreeNode<int>* root, int val)
+{
+    TreeNode<int>* newNode = new TreeNode<int>(val);
+
+    if(root == NULL){
+        return newNode;
+    }   
+        TreeNode<int>* curr = root;
+
+    while(true){
+        if(root->val > val){
+            if(root->left != NULL) root = root->left;
+            else{
+                root->left = newNode;
+                break;
+            }
+        }else{
+            if(root->right != NULL) root = root->right;
+            else{
+                root->right = newNode;
+                break;
+            }
+        }
+    }
+
+    return curr;
+
+}
+
