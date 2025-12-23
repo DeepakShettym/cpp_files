@@ -768,7 +768,7 @@ int widthOfBinaryTree(TreeNode<int>* root) {
     return root;
 }
 
-TreeNode<int>* buildBinaryTree(vector<int>& inorder, vector<int>& preorder)
+TreeNode<int>*buildBinaryTree(vector<int>& inorder, vector<int>& preorder)
 {
     unordered_map<int , int> mapp;
 
@@ -777,4 +777,80 @@ TreeNode<int>* buildBinaryTree(vector<int>& inorder, vector<int>& preorder)
     }
     int idx = 0;                
     return solve(inorder, preorder, 0, inorder.size() - 1, idx , mapp);
+}
+
+TreeNode<int>* solve(
+     vector<int>& postOrder,
+     vector<int>& inOrder,
+     int s, 
+     int e,
+     int &idx,
+     unordered_map<int , int> &mp
+){
+     if(s > e){
+          return NULL;
+     }
+
+     int val  = postOrder[idx--];
+
+     int inIndex = mp[val];
+
+     TreeNode<int>* root = new TreeNode<int>(val);
+
+     root->right = solve(postOrder , inOrder , inIndex + 1 , e , idx , mp);
+
+     root->left = solve(postOrder , inOrder , s , inIndex -1 , idx , mp);
+
+     
+
+     return root;
+     
+
+}
+TreeNode<int>* getTreeFromPostorderAndInorder(vector<int>& postOrder, vector<int>& inOrder){
+     unordered_map<int , int> mp;
+
+     for(int i = 0 ; i < inOrder.size() ; i++){
+          mp[inOrder[i]] = i;
+     }
+     int idx = postOrder.size() - 1;
+     return solve(postOrder , inOrder ,0 , postOrder.size() -1 , idx, mp);
+}
+
+
+    vector<int> inorderTraversalMorris(TreeNode<int>* root) { // space complexity : o(1) no Auxiliary stack space 
+        vector<int> inorder;
+
+        TreeNode<int>* cur = root;
+
+        while(cur != NULL){
+            if(cur->left == NULL){
+                inorder.push_back(cur->data);
+                cur = cur->right;
+            }else{
+                TreeNode<int>* prev = cur->left;
+                while(prev->right && prev->right != cur){
+                    prev = prev->right;
+                }
+
+                if(prev->right == NULL){
+                    prev->right = cur;
+                    cur = cur->left;
+                }else{
+                    prev->right = NULL;
+                    inorder.push_back(cur->data);
+                    cur = cur->right;
+                }
+            }
+        }
+
+        return inorder;
+    }
+
+bool searchInBST(TreeNode<int> *root, int x) {
+    while(root != NULL && root->data != x){
+        root = (root->data > x) ? root->left : root->right ;
+    }
+
+    return root;
 }
